@@ -1,0 +1,89 @@
+pipeline
+{
+
+    agent any      
+    tools
+    { 
+        maven "maven-3.9.0"
+    }
+    options
+    {
+        timestamps()
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5'))
+    }
+    triggers
+    {
+        pollSCM('* * * * *')    //poll scm
+       // cron('* * * * *')    //build periodically
+        //githubPush()        //webhook
+    }
+    stages
+    {
+        stage('GitLogins')
+        {
+            steps
+            {
+            git branch: 'development', credentialsId: 'f835c239-d24f-464c-963f-fd7021fa086b', url: 'https://github.com/bhanu13051991/maven-web-application.git'
+            }
+        }
+      
+        stage('Build')
+        {
+            steps
+            {
+                // sh "mvn clean package"          this will give erro like mvn not found
+                sh "mvn clean package"
+            }
+        }
+        
+        stage('SonarQubeReport')
+        {
+            steps
+            {
+            sh "mvn clean sonar:sonar"
+            }
+        }
+        
+        stage('Upload Artifacts')
+        {
+            steps{
+            sh "mvn clean deploy"
+            }
+        }
+        stage('DeployIntoTomcat')
+        {
+            steps
+            {
+                sshagent(['f873e532-dde5-4b6f-86bf-bb02247090e5'])
+                {
+    
+                sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@54.197.194.1:/opt/tomcat/webapps/"
+                }
+            }
+        }
+    } //stage closing
+    post
+    {
+        always
+        {
+            emailext body: '''the build status is over
+
+regards
+bhanuprakash''', subject: 'Buils status', to: 'sbprakash01@gmail.com'
+        }
+        failure
+        {
+emailext body: '''the build status is failure
+
+regards
+bhanuprakash''', subject: 'Buils status', to: 'sbprakash01@gmail.com'
+        }
+        success
+        {
+emailext body: '''the build status is success
+
+regards
+bhanuprakash''', subject: 'Buils status', to: 'sbprakash01@gmail.com'
+        }
+    }
+} //pipeline closig

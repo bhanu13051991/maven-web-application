@@ -1,5 +1,11 @@
 node{
     def mavenHome = tool name: "maven-3.9.0"
+echo "The Build Number is: ${env.BUILD_NUMBER}"
+echo "The Node name is: ${env.NODE_NAME}"
+echo "The workspace is: ${env.WORKSPACE}"
+echo "The Jenkins URL: ${env.JENKINS_URL}"
+echo "Jenkins Home dir is: ${env.JENKINS_HOME}"
+
 stage('github')
 {
 git branch: 'development', credentialsId: 'f835c239-d24f-464c-963f-fd7021fa086b', url: 'https://github.com/bhanu13051991/maven-web-application.git'

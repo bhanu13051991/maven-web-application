@@ -19,7 +19,7 @@ stage('sonarqube')
 {
 sh "${mavenHome}/bin/mvn sonar:sonar"
 }
-stage('NexusArtifactsupload')
+/* stage('NexusArtifactsupload')
 {
 sh "${mavenHome}/bin/mvn deploy"
 }
@@ -34,3 +34,4 @@ stage('Email notofication')
     emailext body: 'build is over and deployed in tomcat', subject: 'Build is over', to: 'sbprakash01@gmail.com'
 }
 }
+*/

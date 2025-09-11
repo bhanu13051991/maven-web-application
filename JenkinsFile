@@ -1,6 +1,7 @@
 node{
     def mavenHome = tool name: "maven-3.9.0"
 
+echo "Hi Bhanu"
 echo "The Build Number is: ${env.BUILD_NUMBER}"
 echo "The Node name is: ${env.NODE_NAME}"
 echo "The workspace is: ${env.WORKSPACE}"

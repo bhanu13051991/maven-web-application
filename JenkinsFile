@@ -1,6 +1,6 @@
 node{
     def mavenHome = tool name: "maven-3.9.0"
-
+echi "Hi Prakash"
 echo "The Build Number is: ${env.BUILD_NUMBER}"
 echo "The Node name is: ${env.NODE_NAME}"
 echo "The workspace is: ${env.WORKSPACE}"
@@ -15,6 +15,7 @@ stage('build')
 {
 sh "${mavenHome}/bin/mvn clean package"
 }
+/*
 stage('sonarqube')
 {
 sh "${mavenHome}/bin/mvn sonar:sonar"
@@ -33,4 +34,5 @@ stage('Email notofication')
 {
     emailext body: 'build is over and deployed in tomcat', subject: 'Build is over', to: 'sbprakash01@gmail.com'
 }
+*/
 }

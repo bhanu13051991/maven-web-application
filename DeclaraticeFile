@@ -11,12 +11,13 @@ pipeline
         timestamps()
         buildDiscarder(logRotator(artifactDaysToKeepStr: '5', artifactNumToKeepStr: '5', daysToKeepStr: '5', numToKeepStr: '5'))
     }
-    triggers
+  /*  triggers
     {
         pollSCM('* * * * *')    //poll scm
        // cron('* * * * *')    //build periodically
         //githubPush()        //webhook
     }
+*/
     stages
     {
         stage('GitLogins')
@@ -36,7 +37,7 @@ pipeline
             }
         }
         
-        stage('SonarQubeReport')
+       /* stage('SonarQubeReport')
         {
             steps
             {
@@ -61,8 +62,9 @@ pipeline
                 }
             }
         }
+*/
     } //stage closing
-    post
+  /*  post
     {
         always
         {
@@ -86,4 +88,5 @@ regards
 bhanuprakash''', subject: 'Buils status', to: 'sbprakash01@gmail.com'
         }
     }
+*/
 } //pipeline closig

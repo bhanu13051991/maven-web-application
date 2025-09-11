@@ -1,4 +1,4 @@
-node('slave01'){
+node('slave02'){
     def mavenHome = tool name: "maven-3.9.0"
 
 echo "Hi Bhanu"

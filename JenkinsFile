@@ -15,6 +15,7 @@ stage('build')
 {
 sh "${mavenHome}/bin/mvn clean package"
 }
+}
 /*
 stage('sonarqube')
 {
@@ -34,5 +35,6 @@ stage('Email notofication')
 {
     emailext body: 'build is over and deployed in tomcat', subject: 'Build is over', to: 'sbprakash01@gmail.com'
 }
-*/
+
 }
+*/
